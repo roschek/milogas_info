@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:milongas_info/services/auth_service.dart';
 import 'package:milongas_info/widgets/profile_widget.dart';
 
 import 'auth_page.dart';
 
-class ProfilePage extends StatelessWidget {
+class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
 
+  @override
+  State<ProfilePage> createState() => _ProfilePageState();
+}
 
+class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -17,9 +22,7 @@ class ProfilePage extends StatelessWidget {
           IconButton(
             icon: const Icon(Icons.logout),
             tooltip: 'Выйти',
-            onPressed: (){Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) {
-              return const AuthPage();
-            }),(route) => false);}
+            onPressed: (){AuthService().logOut();}
             ,
           )
         ],

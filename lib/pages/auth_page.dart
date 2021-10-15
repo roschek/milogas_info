@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:milongas_info/domains/user.dart';
 import 'package:milongas_info/pages/profile_page.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:milongas_info/services/auth_service.dart';
 
 class AuthPage extends StatefulWidget {
   const AuthPage({Key? key}) : super(key: key);
@@ -15,14 +18,46 @@ class _AuthPageState extends State<AuthPage> {
   late String _email;
   late String _password;
   bool showLogin = true;
-  bool loggedIn = false;
+  final AuthService _authService = AuthService();
 
-  void actionLogin() {
-    loggedIn = !loggedIn;
-    print(loggedIn);
-    Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) {
-      return const ProfilePage();
-    }),(route) => false);
+
+  void _loginAction()  async {
+    _email = _emailController.text;
+    _password = _passwordController.text;
+    if(_email.isEmpty || _password.isEmpty) return;
+    LocalUser? user = await _authService.signInWithEmailAndPassword(_email.trim(), _password.trim());
+    if(user == null) {
+      Fluttertoast.showToast(
+          msg: "Неправильный пароль или электронная почта",
+          gravity: ToastGravity.CENTER,
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+          fontSize: 16
+      );
+    } else {
+      _emailController.clear();
+      _passwordController.clear();
+    }
+  }
+
+
+  _registrationAction() async{
+    _email = _emailController.text;
+    _password = _passwordController.text;
+    if(_email.length <4 || _password.length < 4) return;
+    LocalUser? user = await _authService.registerWithEmailAndPassword(_email.trim(), _password.trim());
+    if(user == null) {
+      Fluttertoast.showToast(
+          msg: "пароль или электронная почта должны быть дленнее 4 символов ",
+          gravity: ToastGravity.CENTER,
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+          fontSize: 16
+      );
+    } else {
+      _emailController.clear();
+      _passwordController.clear();
+    }
   }
 
   Widget _form(String label, void Function() sendRegistration) {
@@ -114,8 +149,8 @@ class _AuthPageState extends State<AuthPage> {
                       fontSize: 24),
                 ),
                 (showLogin
-                    ? _form('ВОЙТИ', actionLogin)
-                    : _form('ЗАРЕГИСТРИРОВАТЬСЯ', actionLogin)),
+                    ? _form('ВОЙТИ', _loginAction)
+                    : _form('ЗАРЕГИСТРИРОВАТЬСЯ', _registrationAction)),
                 showLogin
                     ? Padding(
                         padding: const EdgeInsets.only(top: 20),

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "316713551802",
+    "project_id": "milongas-app",
+    "storage_bucket": "milongas-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:316713551802:android:fa075d7689bd59a3f03f83",
+        "android_client_info": {
+          "package_name": "com.roschek.milongas"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "316713551802-1faaqjrfq0194v53d5v78jv10rgk9h0d.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCMTAoUzqwnk6jALzDtNfOT4f_fJkUy5oA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "316713551802-1faaqjrfq0194v53d5v78jv10rgk9h0d.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
